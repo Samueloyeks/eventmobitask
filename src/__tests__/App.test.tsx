@@ -2,7 +2,7 @@ import React from "react";
 import {unmountComponentAtNode} from "react-dom";
 import {render, screen, waitFor} from '@testing-library/react';
 import App from "../App";
-import {GIST} from "./helper";
+import {GIST} from "./helper/helper";
 
 
 let container: any = null;

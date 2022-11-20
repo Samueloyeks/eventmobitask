@@ -1,7 +1,7 @@
 import React from "react";
 import {unmountComponentAtNode} from "react-dom";
 import {render, screen} from '@testing-library/react';
-import {GIST_WITH_FORKS} from "./helper";
+import {GIST_WITH_FORKS} from "./helper/helper";
 import GistForks from "../components/GistForks";
 
 

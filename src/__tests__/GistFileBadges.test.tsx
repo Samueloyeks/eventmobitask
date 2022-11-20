@@ -1,7 +1,7 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from '@testing-library/react';
-import {GIST} from "./helper";
+import {GIST} from "./helper/helper";
 import GistFileBadges from "../components/GistFileBadges";
 
 

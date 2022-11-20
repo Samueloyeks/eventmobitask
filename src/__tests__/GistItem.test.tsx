@@ -1,7 +1,7 @@
 import React from "react";
 import {unmountComponentAtNode} from "react-dom";
 import {render, screen, waitFor} from '@testing-library/react';
-import {GIST, GIST_WITH_FORKS} from "./helper";
+import {GIST, GIST_WITH_FORKS} from "./helper/helper";
 import GistItem from "../components/GistItem";
 import * as GistService from '../http/gist-service';
 
