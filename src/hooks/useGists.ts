@@ -24,6 +24,7 @@ const useGists = (username: string = "", page: number = 1) => {
             if(page === 1){
                 setGists([]);
             }
+
             getUserGists({username, page}, {signal})
                 .then(data => {
                     setGists(prev => [...prev, ...data])
