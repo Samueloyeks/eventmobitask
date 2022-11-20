@@ -84,7 +84,7 @@ const App = () => {
                         Search
                     </Button>
                 </Box>
-                {!isLoading && username.trim()!== "" && !isError &&
+                {!isLoading && username.trim() !== "" && !isError &&
                     <p className='center'>Showing results for "{username}"</p>
                 }
                 {
