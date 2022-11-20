@@ -17,30 +17,44 @@ You will also see any lint errors in the console.
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
+information.
 
-### `npm run build`
+## Brief documentation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+I set up the api client for fetching gists and provided my token from the .env file <strong>(please see
+example.env)</strong>.<br/>
+Fetch request is initiated via the useGists custom hook which fetches the gists for a particular user with username
+provided.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+In the App component, i have attached a ref to the rendered git item which updates and sets the ref current
+value to the last gist in the array when it is scrolled into view in order to achieve infinite scroll.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+    const lastGistRef = useCallback((gist: any) => {
+        if (isLoading) return
 
-### `npm run eject`
+        if (intObserver.current) intObserver.current.disconnect()
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+        intObserver.current = new IntersectionObserver(gists => {
+            if (gists[0].isIntersecting && hasNextPage) {
+                setPage(prev => prev + 1)
+            }
+        })
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+        if (gist) intObserver.current.observe(gist)
+    }, [isLoading, hasNextPage])
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Api requests are made for each gist in the GistItem component. When the api call is resolved, the
+last 3 forks on the gist are rendered as user avatars with links to them.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+        getGistForks(gistItem.id)
+            .then(({data}) => {
+                handleOnGetForksSuccess(data)
+            })
+            .catch((err: Error) => {
+                handleOnGetForksError(err.message)
+        })
+```
