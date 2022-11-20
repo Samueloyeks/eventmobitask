@@ -58,3 +58,9 @@ last 3 forks on the gist are rendered as user avatars with links to them.
                 handleOnGetForksError(err.message)
         })
 ```
+
+<strong>NB:</strong> Create a .env file with the following variables in the root of project
+```
+REACT_APP_API_BASE_URL=https://api.github.com/users
+REACT_APP_GITHUB_ACCESS_TOKEN=
+```
