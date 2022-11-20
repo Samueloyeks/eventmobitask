@@ -2,7 +2,8 @@ import {useState, useEffect} from 'react'
 import {getUserGists} from '../http/gist-service';
 
 const defaultErrorObj = {
-    cause: undefined, name: "", stack: "", message: ""
+    cause: undefined,
+    name: "", stack: "", message: ""
 }
 const useGists = (username: string = "", page: number = 1) => {
     const [gists, setGists] = useState<any[]>([]);
