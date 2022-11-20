@@ -43,7 +43,6 @@ const useGists = (username: string = "", page: number = 1) => {
         }
 
         return () => controller.abort()
-
     }, [page, username])
 
     return {isLoading, isError, error, gists, hasNextPage}
