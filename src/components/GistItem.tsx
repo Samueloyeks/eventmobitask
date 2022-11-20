@@ -26,11 +26,14 @@ const GistItem = forwardRef(({gist}: { gist: IGist }, ref: any) => {
         const getGistItemFork = () => {
             setFetchingForks(true);
             setIsError(false);
-            getGistForks(
-                gistItem.id,
-                handleOnGetForksSuccess,
-                handleOnGetForksError
-            );
+
+            getGistForks(gistItem.id)
+                .then(({data}) => {
+                    handleOnGetForksSuccess(data)
+                })
+                .catch((err: Error) => {
+                    handleOnGetForksError(err.message)
+                })
         }
 
         if (!gistItem['forks']) {
@@ -81,7 +84,7 @@ const GistItem = forwardRef(({gist}: { gist: IGist }, ref: any) => {
             <GistFileBadges files={formattedFiles}/>
             {
                 isError &&
-                <p className='center'>Error: {errorMessage}</p>
+                <p className='center' data-testid="fetch-forks-error">Error: {errorMessage}</p>
             }
             {!isError && (
                 gistItem.forks && !fetchingForks ?

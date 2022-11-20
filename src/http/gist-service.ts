@@ -13,15 +13,21 @@ const getUserGists = async (params: IGistQueryReqParams, options = {}) => {
     return response.data;
 }
 
-const getGistForks = (gist_id: number, onSuccess: Function, onError: Function) => {
-    octokit.request('GET /gists/{gist_id}/forks{?per_page,page}', {
+const getGistForks = (gist_id: number) => {
+    // octokit.request('GET /gists/{gist_id}/forks{?per_page,page}', {
+    //     gist_id,
+    //     per_page: 3,
+    //     page: 1,
+    // }).then((response) => {
+    //     onSuccess(response.data)
+    // }).catch((err: Error) => {
+    //     onError(err.message)
+    // })
+
+    return octokit.request('GET /gists/{gist_id}/forks{?per_page,page}', {
         gist_id,
         per_page: 3,
         page: 1,
-    }).then((response) => {
-        onSuccess(response.data)
-    }).catch((err: Error) => {
-        onError(err.message)
     })
 }
 
