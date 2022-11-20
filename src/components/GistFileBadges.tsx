@@ -2,13 +2,16 @@ import React from 'react';
 import Constants from "../constants";
 import Box from "@mui/material/Box";
 
-
-const GistFileBadges = ({fileTypes}: { fileTypes: string[] }) => {
+const GistFileBadges = ({files}: { files: string[] }) => {
 
     return (
         <Box sx={fileBadgeStyles.wrapper}>
-            {fileTypes.map((fileType, index) =>
-                <div key={index} style={fileBadgeStyles.badge}>{fileType}</div>
+            {files.map((fileType, index) =>
+                <div
+                    key={index}
+                    style={fileBadgeStyles.badge}
+                    data-testid={fileType + index}
+                >{fileType}</div>
             )}
         </Box>
     )

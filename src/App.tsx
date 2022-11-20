@@ -64,7 +64,7 @@ const App = () => {
                 <Box sx={appStyles.boxStyle}>
                     <OutlinedInput
                         fullWidth
-                        id="outlined-adornment-amount"
+                        data-testid="username-input"
                         value={inputVal}
                         onChange={(e) => setInputVal(e.target.value)}
                         onKeyDown={(e) => handleOnKeyDown(e)}
@@ -76,6 +76,7 @@ const App = () => {
                     />
                     <Button
                         variant="contained"
+                        data-testid="search-button"
                         disabled={inputVal.trim() === "" || isLoading}
                         style={appStyles.searchButton}
                         onClick={handleTriggerFetchGists}

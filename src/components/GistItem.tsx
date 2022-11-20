@@ -6,45 +6,69 @@ import GistFileBadges from "./GistFileBadges";
 import {getGistForks} from "../http/gist-service";
 import GistForks from "./GistForks";
 import LinearProgress from '@mui/material/LinearProgress';
+import {IGist} from "../types/gist";
 
-const GistItem = forwardRef(({gist}: { gist: any }, ref: any) => {
-    const [gistItem, setGistItem] = useState<any>(gist);
-    let fileTypes: string[] = [];
+const GistItem = forwardRef(({gist}: { gist: IGist }, ref: any) => {
+    const [gistItem, setGistItem] = useState<IGist>(gist);
+    const [isError, setIsError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [fetchingForks, setFetchingForks] = useState<boolean>(false);
+
     const {files} = gistItem;
+    let formattedFiles: string[] = [];
 
     if (files) {
-        fileTypes = Object.values(files).map((file: any) => file.language || file.type);
+        formattedFiles = Object.values(files)
+            .map((file) => file.language || file.type);
     }
 
     useEffect(() => {
         const getGistItemFork = () => {
-            getGistForks(gistItem.id)
-                .then((forks: any[]) => {
-                    forks = forks.map(fork => {
-                        const {git_pull_url, owner} = fork;
-
-                        return {
-                            git_pull_url,
-                            avatar_url: owner.avatar_url
-                        }
-                    })
-
-                    setGistItem({...gistItem, forks});
-                }).catch(() => {
-                setGistItem({...gistItem, forks: []});
-            })
+            setFetchingForks(true);
+            setIsError(false);
+            getGistForks(
+                gistItem.id,
+                handleOnGetForksSuccess,
+                handleOnGetForksError
+            );
         }
 
         if (!gistItem['forks']) {
             getGistItemFork();
         }
+
     }, [gistItem])
+
+    const handleOnGetForksSuccess = (forks: any[]) => {
+        const formattedGistForks = forks.map((fork) => {
+            const {git_pull_url, owner} = fork;
+
+            return {
+                git_pull_url,
+                avatar_url: owner?.avatar_url,
+                login: owner?.login
+            }
+        })
+
+        setFetchingForks(false);
+        setGistItem({...gistItem, forks: formattedGistForks});
+    }
+
+    const handleOnGetForksError = (errorMessage: string) => {
+        setFetchingForks(false);
+        setIsError(true);
+        setErrorMessage(errorMessage);
+    }
 
     const gistBody = (
         gistItem &&
         <Box sx={gistItemStyles.wrapper} textAlign="left">
             <Grid container display="flex" alignItems="center">
-                <Grid item md={6} sm={12}><h3>{gistItem.id}</h3></Grid>
+                <Grid item md={6} sm={12}>
+                    <h3 data-test-id="">
+                        {gistItem.id}
+                    </h3>
+                </Grid>
                 <Grid container
                       direction="row"
                       justifyContent={{md: "flex-end"}}
@@ -54,16 +78,20 @@ const GistItem = forwardRef(({gist}: { gist: any }, ref: any) => {
                     Created: {gistItem.created_at.split('T')[0]}
                 </Grid>
             </Grid>
-            <GistFileBadges fileTypes={fileTypes}/>
+            <GistFileBadges files={formattedFiles}/>
             {
-                gistItem.forks ?
+                isError &&
+                <p className='center'>Error: {errorMessage}</p>
+            }
+            {!isError && (
+                gistItem.forks && !fetchingForks ?
                     <GistForks forks={gistItem.forks}/>
                     :
                     <div>
                         fetching forks
                         <LinearProgress/>
                     </div>
-            }
+            )}
         </Box>
     )
 
