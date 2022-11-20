@@ -67,8 +67,8 @@ const GistItem = forwardRef(({gist}: { gist: IGist }, ref: any) => {
         gistItem &&
         <Box sx={gistItemStyles.wrapper} textAlign="left">
             <Grid container display="flex" alignItems="center">
-                <Grid item md={6} sm={12}>
-                    <h3 data-test-id="">
+                <Grid item md={6} sm={12} style={{wordBreak:"break-all"}}>
+                    <h3 style={{ flexShrink: 1 }}>
                         {gistItem.id}
                     </h3>
                 </Grid>
@@ -123,7 +123,7 @@ const gistItemStyles = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'baseline',
-    }
+    },
 }
 
 export default GistItem;
