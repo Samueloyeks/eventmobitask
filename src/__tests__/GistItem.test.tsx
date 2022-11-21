@@ -23,7 +23,7 @@ describe('GistItem', () => {
     render(<GistItem gist={GIST}/>);
 
     it("renders gist correctly", () => {
-        const gistItemIdElement = screen.getByText(GIST.id)
+        const gistItemIdElement = screen.getByText("ID: "+GIST.id)
         expect(gistItemIdElement).toBeInTheDocument();
     });
 

@@ -30,15 +30,13 @@ describe('App', () => {
         container = document.createElement("div");
         document.body.appendChild(container);
 
-        const interSectionObserverMock = function () {
+        // @ts-ignore
+        global.IntersectionObserver = function () {
             return {
                 observe: jest.fn(),
                 disconnect: jest.fn(),
             };
         };
-
-        // @ts-ignore
-        global.IntersectionObserver = interSectionObserverMock;
     });
 
     afterEach(() => {
@@ -52,7 +50,7 @@ describe('App', () => {
         render(<App/>)
 
         await waitFor(() => {
-            expect(screen.getByText(GIST.id)).toBeTruthy()
+            expect(screen.getByText("ID: "+GIST.id)).toBeTruthy()
         })
     });
 })

@@ -1,5 +1,6 @@
 export interface IGist {
     id: number,
+    description: string,
     created_at: string,
     files: IGistFile,
     forks?: IGistFork[]

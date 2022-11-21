@@ -1,6 +1,7 @@
 export const GIST = {
     id: 100222345,
     created_at: '2016-12-02T00:00',
+    description: 'mock gist',
     files: {
         file1: {
             language: 'JavaScript',
