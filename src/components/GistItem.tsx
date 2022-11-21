@@ -68,7 +68,7 @@ const GistItem = forwardRef(({gist}: { gist: IGist }, ref: any) => {
         <Box sx={gistItemStyles.wrapper} textAlign="left">
             <Grid container display="flex" alignItems="center">
                 <Grid item md={6} sm={12} style={{wordBreak:"break-word"}}>
-                    <h3>
+                    <h3 style={gistItemStyles.idWrapper}>
                         {`ID: ${gistItem.id}`}
                     </h3>
                 </Grid>
@@ -81,7 +81,7 @@ const GistItem = forwardRef(({gist}: { gist: IGist }, ref: any) => {
                     Created: {gistItem.created_at.split('T')[0]}
                 </Grid>
             </Grid>
-            <div style={gistItemStyles.description}>{gist.description}</div>
+            <div>{gist.description}</div>
             <GistFileBadges files={formattedFiles}/>
             {
                 isError &&
@@ -125,7 +125,7 @@ const gistItemStyles = {
         justifyContent: 'space-between',
         alignItems: 'baseline',
     },
-    description: {
+    idWrapper: {
         color: Constants.DARK
     }
 }
