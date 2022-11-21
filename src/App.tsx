@@ -61,7 +61,7 @@ const App = () => {
         <Box textAlign="center" style={appStyles.wrapper}>
             <h1 id="top">Enter github username to fetch gists</h1>
             <Container maxWidth="lg">
-                <Box sx={appStyles.boxStyle}>
+                <Box sx={appStyles.headerContainer}>
                     <OutlinedInput
                         fullWidth
                         data-testid="username-input"
@@ -108,7 +108,7 @@ const appStyles = {
     wrapper: {
         color: Constants.PRIMARY,
     },
-    boxStyle: {
+    headerContainer: {
         p: '10px 0',
         display: 'flex',
         justifyContent: 'center',
@@ -126,11 +126,6 @@ const appStyles = {
     searchButton: {
         color: Constants.PRIMARY,
         marginLeft: 10,
-    },
-    scrollToTopLink: {
-        color: Constants.PRIMARY,
-        textDecoration: 'none',
-        margin: 5,
     }
 }
 

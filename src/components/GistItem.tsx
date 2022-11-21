@@ -49,7 +49,7 @@ const GistItem = forwardRef(({gist}: { gist: IGist }, ref: any) => {
             return {
                 git_pull_url,
                 avatar_url: owner?.avatar_url,
-                login: owner?.login
+                login: owner?.login,
             }
         })
 
